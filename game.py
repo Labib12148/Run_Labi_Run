@@ -109,8 +109,8 @@ player.add(Player())
 
 obstacle_group = pygame.sprite.Group()
 
-sky_surface = pygame.image.load("assets/sky_and_ground/sky1.png").convert()
-ground_surface = pygame.image.load("assets/sky_and_ground/ground1.jpg").convert()
+sky_surface = pygame.image.load("assets/sky_and_ground/sky.png").convert()
+ground_surface = pygame.image.load("assets/sky_and_ground/ground.jpg").convert()
 
 # Intro screen
 player_stand = pygame.image.load("assets/character/player_stand.png").convert_alpha()
