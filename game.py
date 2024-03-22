@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.player_jump = pygame.image.load("assets/character/jump.png").convert_alpha()
 
         self.image = self.player_walk[self.player_index]
-        self.rect = self.image.get_rect(midbottom=(80, 400))  # Adjusted initial position for the new screen size
+        self.rect = self.image.get_rect(midbottom=(80, 400)) 
         self.gravity = 0
 
         self.jump_sound = pygame.mixer.Sound("assets/Audio/jump.mp3")
@@ -20,14 +20,14 @@ class Player(pygame.sprite.Sprite):
 
     def player_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_SPACE] and self.rect.bottom >= 400:  # Adjusted boundary for the new screen size
+        if keys[pygame.K_SPACE] and self.rect.bottom >= 400: 
             self.gravity = -20
             self.jump_sound.play()
 
     def apply_gravity(self):
         self.gravity += 1
         self.rect.y += self.gravity
-        if self.rect.bottom >= 400:  # Adjusted boundary for the new screen size
+        if self.rect.bottom >= 400: 
             self.rect.bottom = 400
 
     def animation_state(self):
@@ -51,16 +51,16 @@ class Obstacle(pygame.sprite.Sprite):
             dragon = pygame.image.load("assets/character/dragon1.png").convert_alpha()
             dragon_1 = pygame.image.load("assets/character/dragon.png").convert_alpha()
             self.frames = [dragon,dragon_1]
-            y_pos = 300  # Adjusted position for the new screen size
+            y_pos = 300  
         else:
             robott = pygame.image.load("assets/character/robott.png").convert_alpha()
             robott_1 = pygame.image.load("assets/character/robott_1.png").convert_alpha()
             self.frames = [robott,robott_1]
-            y_pos  = 400  # Adjusted position for the new screen size
+            y_pos  = 400  
 
         self.animation_index = 0
         self.image = self.frames[self.animation_index]
-        self.rect = self.image.get_rect(midbottom=(randint(900,1100),y_pos))  # Adjusted initial position for the new screen size
+        self.rect = self.image.get_rect(midbottom=(randint(900,1100),y_pos))  
 
     def animation_state(self):
         self.animation_index += 0.1 
@@ -91,7 +91,7 @@ def collision_sprite():
         return True
 
 pygame.init()
-screen = pygame.display.set_mode((800, 600))  # Adjusted screen size
+screen = pygame.display.set_mode((800, 600)) 
 pygame.display.set_caption('Run Labi Run!')
 
 clock = pygame.time.Clock()
@@ -115,13 +115,13 @@ ground_surface = pygame.image.load("assets/sky_and_ground/ground.jpg").convert()
 # Intro screen
 player_stand = pygame.image.load("assets/character/player_stand.png").convert_alpha()
 player_stand = pygame.transform.rotozoom(player_stand, 0, 2)
-player_stand_rect = player_stand.get_rect(center=(400, 250))  # Adjusted position for the new screen size
+player_stand_rect = player_stand.get_rect(center=(400, 250))  
 
 game_name = test_font.render('Run Labi Run', False, (111, 196, 169))
-game_name_rect = game_name.get_rect(center=(400, 50))  # Adjusted position for the new screen size
+game_name_rect = game_name.get_rect(center=(400, 50))  
 
 game_message = test_font.render('Press space to run', False, (111, 196, 169))
-game_message_rect = game_message.get_rect(center=(400, 500))  # Adjusted position for the new screen size
+game_message_rect = game_message.get_rect(center=(400, 500))  
 
 # Timer
 obstacle_timer = pygame.USEREVENT + 1
@@ -140,7 +140,7 @@ while True:
                 obstacle_group.add(Obstacle(choice(['dragon', 'robot', 'robot', 'robot'])))
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_z:
-                    score_multiplier += 20  # Increase score multiplier by 20
+                    score_multiplier += 20 
         else:
             if event.type == pygame.KEYDOWN and (event.key == pygame.K_SPACE or event.key == pygame.K_RETURN):
                 game_active = True
@@ -148,7 +148,7 @@ while True:
 
     if game_active:
         screen.blit(sky_surface, (0, 0))
-        screen.blit(ground_surface, (0, 400))  # Adjusted position for the new screen size
+        screen.blit(ground_surface, (0, 400)) 
         score = display_score()
         
         player.draw(screen)
@@ -164,7 +164,7 @@ while True:
         screen.blit(player_stand, player_stand_rect)
 
         score_message = test_font.render(f'Your score: {score}', False, (111, 196, 169))
-        score_message_rect = score_message.get_rect(center=(400, 500))  # Adjusted position for the new screen size
+        score_message_rect = score_message.get_rect(center=(400, 500))  
         screen.blit(game_name, game_name_rect)
 
         if score == 0:
