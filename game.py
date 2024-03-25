@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
-from random import randint, choice
+from random import randint, choice, shuffle
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -44,23 +45,44 @@ class Player(pygame.sprite.Sprite):
         self.animation_state()
 
 class Obstacle(pygame.sprite.Sprite):
-    def __init__(self,type):
+    def __init__(self, type):
         super().__init__()
         
         if type == 'dragon':
             dragon = pygame.image.load("assets/character/dragon1.png").convert_alpha()
             dragon_1 = pygame.image.load("assets/character/dragon.png").convert_alpha()
-            self.frames = [dragon,dragon_1]
+            self.frames = [dragon, dragon_1]
             y_pos = 300  
-        else:
+        elif type == 'robot':
             robott = pygame.image.load("assets/character/robott.png").convert_alpha()
             robott_1 = pygame.image.load("assets/character/robott_1.png").convert_alpha()
-            self.frames = [robott,robott_1]
-            y_pos  = 400  
+            robott_2 = pygame.image.load("assets/character/robott_2.png").convert_alpha()
+            self.frames = [robott, robott_1, robott_1, robott, robott_2, robott_2]
+            y_pos = 400
+        elif type == 'robo':
+            robo = pygame.image.load("assets/character/robo.png").convert_alpha()
+            robo2 = pygame.image.load("assets/character/robo2.png").convert_alpha()
+            robo3 = pygame.image.load("assets/character/robo3.png").convert_alpha()
+            self.frames = [robo, robo2, robo, robo2, robo, robo2, robo, robo3, robo, robo3, robo, robo2, robo, robo3, robo, robo3, robo, robo3,]
+            y_pos = 400
+        elif type == 'robot2':
+            robot = pygame.image.load("assets/character/robot.png").convert_alpha()
+            robot2 = pygame.image.load("assets/character/robot2.png").convert_alpha()
+            robot3 = pygame.image.load("assets/character/robot3.png").convert_alpha()
+            self.frames = [robot, robot, robot2, robot2, robot3, robot3]
+            y_pos = 400
+        elif type == 'bot':
+            bot = pygame.image.load("assets/character/bot.png").convert_alpha()
+            bot2 = pygame.image.load("assets/character/bot2.png").convert_alpha()
+            self.frames = [bot, bot2]
+            y_pos = 400
 
         self.animation_index = 0
         self.image = self.frames[self.animation_index]
-        self.rect = self.image.get_rect(midbottom=(randint(900,1100),y_pos))  
+        self.rect = self.image.get_rect(midbottom=(randint(900, 1100), y_pos))  
+
+        # Move animation_state() here
+        self.animation_state()
 
     def animation_state(self):
         self.animation_index += 0.1 
@@ -128,6 +150,8 @@ obstacle_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(obstacle_timer, 1500)
 
 score_multiplier = 0
+obstacle_types = ['dragon', 'robot2', 'robot', 'robo', 'bot']
+shuffle(obstacle_types)
 
 while True:
     for event in pygame.event.get():
@@ -137,10 +161,10 @@ while True:
 
         if game_active:
             if event.type == obstacle_timer:
-                obstacle_group.add(Obstacle(choice(['dragon', 'robot', 'robot', 'robot'])))
+                obstacle_group.add(Obstacle(choice(obstacle_types)))
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_z:
-                    score_multiplier += 20 
+                if event.key == pygame.K_DELETE:
+                    score_multiplier += 5 
         else:
             if event.type == pygame.KEYDOWN and (event.key == pygame.K_SPACE or event.key == pygame.K_RETURN):
                 game_active = True
